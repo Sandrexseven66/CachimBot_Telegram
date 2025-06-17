@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
-from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings  # ✅ Cambio aquí
 from langchain.chains import RetrievalQA
 
@@ -118,7 +118,7 @@ def main():
         return
 
     embedding = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-    vectorstore = FAISS.from_documents(texts, embedding)
+    vectorstore = Chroma.from_documents(texts, embedding)
 
     qa_chain = RetrievalQA.from_chain_type(
         llm=ChatOpenAI(openai_api_key=OPENAI_API_KEY),
